@@ -28,4 +28,6 @@ public interface IVideoService {
     
     // Đếm tổng số video
     int count();
+    
+    List<Video> searchByTitle(String title);
 }

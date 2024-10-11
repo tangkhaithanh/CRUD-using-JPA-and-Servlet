@@ -121,7 +121,7 @@
 
     <label for="views">Views:</label>
     <input type="number" id="views" name="views" required>
-
+	<!-- tạo dropdown list như combo box trong C# -->
     <label for="categoryId">Category:</label>
     <select id="categoryId" name="categoryId" required>
         <c:forEach var="category" items="${categories}">

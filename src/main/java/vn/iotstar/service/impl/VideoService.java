@@ -59,4 +59,9 @@ public class VideoService implements IVideoService{
 		return videoDao.count();
 	}
 
+	@Override
+	public List<Video> searchByTitle(String title)
+	{
+		    return videoDao.searchByTitle(title);
+	}
 }

@@ -127,21 +127,25 @@ public class CategoryDao implements ICategoryDao{
 	
 	 // FindAll phan trang:
 	 @Override
-	public List<Category> findAll(int page, int pagesize)
-	 {
+	 public List<Category> findAll(int page, int pageSize) {
+		    EntityManager enma = JPAConfig.getEntityManager();
+		    
+		    // Đảm bảo page không âm
+		    if (page < 0) {
+		        page = 0;
+		    }
+		    
+		    TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+		    
+		    // Đảm bảo giá trị firstResult không âm
+		    int firstResult = Math.max(page * pageSize, 0);
+		    
+		    query.setFirstResult(firstResult);  // Thiết lập vị trí bắt đầu
+		    query.setMaxResults(pageSize);      // Giới hạn số lượng kết quả
+		    
+		    return query.getResultList();
+		}
 
-
-		 EntityManager enma = JPAConfig.getEntityManager();
-
-		 TypedQuery<Category> query= enma.createNamedQuery("Category.findAll", Category.class);
-
-		 query.setFirstResult(page*pagesize);
-
-		 query.setMaxResults(pagesize);
-
-		 return query.getResultList();
-
-	}
 	 @Override
 	public int count()
 	 {

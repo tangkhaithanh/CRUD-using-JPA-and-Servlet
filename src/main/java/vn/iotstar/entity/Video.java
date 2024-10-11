@@ -97,4 +97,7 @@ public class Video implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
+    public String getCategoryName () {
+    	return category != null ? category.getCategoryname() : null;
+    }
 }

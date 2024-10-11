@@ -100,20 +100,36 @@ public class VideoDao implements IVideoDao {
 
 	@Override
 	public List<Video> findAll(int page, int pageSize) {
-		EntityManager enma = JPAConfig.getEntityManager();
-        TypedQuery<Video> query = enma.createNamedQuery("Video.findAll", Video.class);
-        query.setFirstResult(page * pageSize);  // Thiết lập vị trí bắt đầu
-        query.setMaxResults(pageSize);  // Giới hạn số lượng kết quả
-        return query.getResultList();
+		 EntityManager em = JPAConfig.getEntityManager();
+	        try {
+	            TypedQuery<Video> query = em.createQuery("SELECT v FROM Video v", Video.class);
+	            query.setFirstResult(page * pageSize); // Bắt đầu từ đâu
+	            query.setMaxResults(pageSize); // Số lượng video tối đa trong một trang
+	            return query.getResultList();
+	        } finally {
+	            em.close();
+	        }
 	}
 
 	@Override
-	public int count() {
+	public int count() 
+	{
 		// TODO Auto-generated method stub
 		EntityManager enma = JPAConfig.getEntityManager();
         String jpql = "SELECT count(v) FROM Video v";
         Query query = enma.createQuery(jpql);
         return ((Long) query.getSingleResult()).intValue();
 	}
+
+	@Override
+	public List<Video> searchByTitle(String title) {
+		// TODO Auto-generated method stub
+				EntityManager enma = JPAConfig.getEntityManager();
+		        String jpql = "SELECT v FROM Video v WHERE v.title like :title";
+		        TypedQuery<Video> query = enma.createQuery(jpql, Video.class);
+		        query.setParameter("title", "%" + title + "%");
+		        return query.getResultList();
+	}
+	
 	
 }

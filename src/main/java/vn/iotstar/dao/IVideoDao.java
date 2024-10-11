@@ -29,5 +29,9 @@ public interface IVideoDao {
     
     // Đếm tổng số video
     int count();
+    
+    List<Video>searchByTitle(String title);
+    
 	 
 }
+ 

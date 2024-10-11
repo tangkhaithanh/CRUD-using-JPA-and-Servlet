@@ -98,22 +98,35 @@
     <div style="text-align: center; margin-bottom: 20px;">
         <a href="<c:url value='/admin/video/add'></c:url>">Thêm Video</a>
     </div>
+    
+    <!-- Form tìm kiếm -->
+    <form action="<c:url value='/admin/video/search'></c:url>" method="get" style="text-align: center; margin-bottom: 20px;">
+        <input type="hidden" name="page" value="${currentPage}" /> <!-- Thêm tham số trang hiện tại -->
+        <input type="hidden" name="pageSize" value="${pageSize}" /> <!-- Thêm tham số kích thước trang -->
+        <input type="text" name="keyword" placeholder="Tìm kiếm theo tiêu đề..." required />
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    
+    
+    
     <table>
         <tr>
             <th>STT</th>
             <th>Hình đại diện</th>
             <th>Tiêu đề</th>
             <th>Mô tả</th>
+            <th>Thể loại</th>
             <th>Lượt xem</th>
             <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
         <c:forEach items="${listVideos}" var="video" varStatus="status">
             <tr>
-                <td>${status.index + 1}</td>
+                <td>${(currentPage * pageSize) + status.index + 1}</td> <!-- Tính số thứ tự video -->
                 <td><img src="<c:url value='/images/${video.poster}'/>" alt="${video.title}"/></td>
                 <td>${video.title}</td>
                 <td>${video.description}</td>
+                <td>${video.categoryName}</td>
                 <td>${video.views}</td>
                 <td>${video.active == 1 ? 'Kích hoạt' : 'Khóa'}</td>
                 <td class="action-links">
@@ -123,5 +136,38 @@
             </tr>
         </c:forEach>
     </table>
+<!-- kiểm tra: -->
+		
+		<c:if test="${empty listVideos}">
+		    <p>Không có video nào phù hợp với tìm kiếm của bạn.</p>
+		</c:if>
+
+<!-- Phân trang -->
+	<c:if test="${totalPages > 1}">
+        <div style="text-align: center; margin-top: 20px;">
+            <!-- Nút "Trước" -->
+            <c:if test="${currentPage > 0}">
+                <a href="<c:url value='?page=${currentPage - 1}&keyword=${param.keyword}&pageSize=${pageSize}'/>" style="margin: 0 5px; padding: 5px 10px; text-decoration: none; color: #333; background-color: #f0f0f0; border-radius: 5px;">Trước</a>
+            </c:if>
+
+            <!-- Hiển thị các số trang -->
+            <c:forEach begin="0" end="${totalPages - 1}" var="pageNum">
+                <c:choose>
+                    <c:when test="${pageNum == currentPage}">
+                        <span style="display: inline-block; margin: 0 5px; padding: 5px 10px; background-color: #007BFF; color: white; border-radius: 5px;">${pageNum + 1}</span>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='?page=${pageNum}&keyword=${param.keyword}&pageSize=${pageSize}'/>" style="display: inline-block; margin: 0 5px; padding: 5px 10px; text-decoration: none; color: #333; background-color: #f0f0f0; border-radius: 5px;">${pageNum + 1}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+
+            <!-- Nút "Tiếp" -->
+            <c:if test="${currentPage < totalPages - 1}">
+                <a href="<c:url value='?page=${currentPage + 1}&keyword=${param.keyword}&pageSize=${pageSize}'/>" style="margin: 0 5px; padding: 5px 10px; text-decoration: none; color: #333; background-color: #f0f0f0; border-radius: 5px;">Tiếp</a>
+            </c:if>
+        </div>
+    </c:if>
+    	
 </body>
 </html>
