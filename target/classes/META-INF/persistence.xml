@@ -40,7 +40,7 @@ version="3.0">
 		<property name="hibernate.format_sql" value="true" />
 		
 		
-		<property name="hibernate.hbm2ddl.auto" value="update" />
+		<property name="hibernate.hbm2ddl.auto" value="update" /> <!-- tạo mới(chưa có) hoặc cập nhật csdl nếu có rồi -->
 		
 		
 		<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2012Dialect"/>

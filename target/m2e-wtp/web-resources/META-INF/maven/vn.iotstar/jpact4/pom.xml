@@ -76,7 +76,12 @@
 
 
 
-</dependencies>
+  	<dependency>
+  		<groupId>vn.iostar</groupId>
+  		<artifactId>jpast2</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 
 
   

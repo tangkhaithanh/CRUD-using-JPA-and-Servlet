@@ -56,12 +56,9 @@
         </a>
         <h2 class="text-center mb-4">Danh sách Video</h2>
         
+        <!-- Form tìm kiếm -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="<c:url value='/admin/video/add'></c:url>" class="btn btn-primary">
-                <i class="fas fa-plus-circle me-2"></i>Thêm Video
-            </a>
-            
-            <form action="<c:url value='/admin/video/search'></c:url>" method="get" class="d-flex">
+            <form action="<c:url value='/home/search'></c:url>" method="get" class="d-flex">
                 <input type="hidden" name="page" value="${currentPage}" />
                 <input type="hidden" name="pageSize" value="${pageSize}" />
                 <input type="text" name="keyword" class="form-control me-2" placeholder="Tìm kiếm theo tiêu đề..." required />
@@ -82,7 +79,6 @@
                         <th>Thể loại</th>
                         <th>Lượt xem</th>
                         <th>Trạng thái</th>
-                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,14 +94,6 @@
                                 <span class="badge ${video.active == 1 ? 'bg-success' : 'bg-danger'}">
                                     ${video.active == 1 ? 'Kích hoạt' : 'Khóa'}
                                 </span>
-                            </td>
-                            <td>
-                                <a href="<c:url value='/admin/video/edit?id=${video.videoId}'/>" class="btn btn-sm btn-outline-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="<c:url value='/admin/video/delete?id=${video.videoId}'/>" class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
                             </td>
                         </tr>
                     </c:forEach>
